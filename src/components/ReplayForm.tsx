@@ -27,6 +27,7 @@ export const ReplayForm: FC<ReplayFormProps> = ({ onSubmit }) => {
       <button
         type="submit"
         className="bg-moderateBlue text-white px-4 py-2 rounded-lg uppercase hover:bg-lightGrayishBlue"
+        aria-label="Submit"
       >
         Reply
       </button>

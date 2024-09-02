@@ -31,6 +31,7 @@ export const ActionButtons: React.FC<{
         <button
           className=" text-softRed font-bold inline-flex items-center gap-2 hover:text-paleRed mr-4"
           onClick={() => setIsOpenModal(true)}
+          aria-label="Delete"
         >
           <FaTrash />
           Delete
@@ -38,6 +39,7 @@ export const ActionButtons: React.FC<{
         <button
           className="text-moderateBlue font-bold inline-flex items-center gap-2 hover:text-lightGrayishBlue"
           onClick={onEdit}
+          aria-label="Edit"
         >
           <FaEdit />
           Edit
@@ -47,6 +49,7 @@ export const ActionButtons: React.FC<{
       <button
         className=" text-moderateBlue font-bold inline-flex items-center gap-2 hover:text-lightGrayishBlue"
         onClick={onReply}
+        aria-label="Reply"
       >
         <FaReply />
         Reply

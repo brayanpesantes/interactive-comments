@@ -45,6 +45,7 @@ export function CommentForm({ currentUser, onAddComment }: CommentFormProps) {
         <button
           type="submit"
           className="bg-moderateBlue flex-none  text-white font-medium py-3 px-6 rounded-lg uppercase hover:bg-lightGrayishBlue"
+          aria-label="Send"
         >
           Send
         </button>

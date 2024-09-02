@@ -10,6 +10,7 @@ export const VoteButtons: React.FC<{
       className={userVote === 1 ? "cursor-not-allowed" : "cursor-pointer"}
       onClick={() => onVote(1)}
       disabled={userVote === 1}
+      aria-label="Vote up"
     >
       <FaPlus className="text-lightGrayishBlue group-hover:text-moderateBlue" />
     </button>
@@ -18,6 +19,7 @@ export const VoteButtons: React.FC<{
       className={userVote === null ? "cursor-not-allowed" : "cursor-pointer"}
       onClick={() => onVote(-1)}
       disabled={userVote === null}
+      aria-label="Vote down"
     >
       <FaMinus className="text-lightGrayishBlue group-hover:text-moderateBlue" />
     </button>

@@ -20,12 +20,14 @@ export const ConfirmDelete: FC<ConfirmDeleteProps> = ({
           <button
             className="bg-darkBlue text-white px-4 py-2 rounded-lg hover:bg-grayishBlue uppercase"
             onClick={onCancel}
+            aria-label="Cancel"
           >
             No, Cancel
           </button>
           <button
             className="text-white bg-softRed hover:bg-paleRed font-medium px-4 py-2 rounded-lg uppercase hover:bg-red-700"
             onClick={onDelete}
+            aria-label="Delete"
           >
             Yes, Delete
           </button>
