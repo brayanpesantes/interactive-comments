@@ -1,12 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CommentCard } from "./components/CommentCard";
 import { CommentForm } from "./components/CommentForm";
 import data from "./data.json";
 
 export default function App() {
-  const [comments, setComments] = useState<Comment[]>(
-    data.comments as Comment[]
-  );
+  // TODO: Implement useLocalStorage
+  const [comments, setComments] = useState<Comment[]>(() => {
+    const savedComments = localStorage.getItem("comments");
+    return savedComments
+      ? JSON.parse(savedComments)
+      : (data.comments as Comment[]);
+  });
+
+  useEffect(() => {
+    localStorage.setItem("comments", JSON.stringify(comments));
+  }, [comments]);
   const [currentUser] = useState<User>(data.currentUser as User);
 
   const handleAddComment = (comment: Comment) => {
