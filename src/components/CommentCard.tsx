@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { createPortal } from "react-dom";
-import { FaEdit, FaMinus, FaPlus, FaReply, FaTrash } from "react-icons/fa";
-import { ConfirmDelete } from "./ConfirmDelete";
+import { useVoting } from "../hooks/useVoting";
+import { ActionButtons } from "./ActionButtons";
+import Avatar from "./Avatar";
 import { ReplayForm } from "./ReplayForm";
+import { VoteButtons } from "./VoteButtons";
 
 interface CommentCardProps {
   readonly comment: Comment | Reply;
@@ -28,18 +29,8 @@ export function CommentCard({
   const [isEditing, setIsEditing] = useState(false);
   const [editedContent, setEditedContent] = useState(comment.content);
   const [isReplying, setIsReplying] = useState(false);
-  const [userVote, setUserVote] = useState<number | null>(null);
   const [isOpenModal, setIsOpenModal] = useState(false);
-
-  const handleVote = (increment: number) => {
-    if (userVote === null) {
-      onVote(increment);
-      setUserVote(increment);
-    } else {
-      setUserVote(null);
-      onVote(increment);
-    }
-  };
+  const { userVote, score, handleVote } = useVoting(comment.score, onVote);
 
   const handleEditComment = () => {
     onEditComment(editedContent);
@@ -60,33 +51,16 @@ export function CommentCard({
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="bg-white rounded-lg p-6 flex flex-col-reverse lg:flex-row  gap-6 items-start">
-        <div className="flex gap-4 flex-row lg:flex-col  bg-veryLightGray p-4 rounded-lg">
-          <button
-            className={userVote === 1 ? "cursor-not-allowed" : "cursor-pointer"}
-            onClick={() => handleVote(1)}
-            disabled={userVote === 1}
-          >
-            <FaPlus className="text-lightGrayishBlue group-hover:text-moderateBlue" />
-          </button>
-          <span className="text-moderateBlue font-bold">{comment.score}</span>
-          <button
-            className={
-              userVote === null ? "cursor-not-allowed" : "cursor-pointer"
-            }
-            onClick={() => handleVote(-1)}
-            disabled={userVote === null}
-          >
-            <FaMinus className="text-lightGrayishBlue group-hover:text-moderateBlue" />
-          </button>
+      <div className="bg-white rounded-lg p-6 flex  flex-row  gap-6 items-start">
+        <div className="md:block hidden">
+          <VoteButtons userVote={userVote} score={score} onVote={handleVote} />
         </div>
         <div className="w-full">
           <div className="flex gap-4 items-center justify-between">
             <div className="inline-flex gap-4 items-center">
-              <img
-                src={comment.user.image.png}
-                alt={comment.user.username}
-                className="size-11"
+              <Avatar
+                image={comment.user.image.png}
+                username={comment.user.username}
               />
 
               <span className="text-darkBlue font-bold">
@@ -101,43 +75,15 @@ export function CommentCard({
                 {comment.createdAt}
               </time>
             </div>
-            <div>
-              {comment.user.username === currentUser.username && (
-                <button
-                  className="hidden text-softRed font-bold md:inline-flex items-center gap-2 hover:text-paleRed mr-4"
-                  onClick={() => {
-                    setIsOpenModal(true);
-                  }}
-                >
-                  <FaTrash />
-                  Delete
-                </button>
-              )}
-              {isOpenModal &&
-                createPortal(
-                  <ConfirmDelete
-                    onCancel={() => setIsOpenModal(false)}
-                    onDelete={() => onDeleteComment(comment.id)}
-                  />,
-                  document.body
-                )}
-              {comment.user.username !== currentUser.username ? (
-                <button
-                  className="hidden  text-moderateBlue font-bold md:inline-flex items-center gap-2 hover:text-lightGrayishBlue"
-                  onClick={() => setIsReplying(true)}
-                >
-                  <FaReply />
-                  Reply
-                </button>
-              ) : (
-                <button
-                  className="hidden text-moderateBlue font-bold md:inline-flex items-center gap-2 hover:text-lightGrayishBlue"
-                  onClick={() => setIsEditing(true)}
-                >
-                  <FaEdit />
-                  Edit
-                </button>
-              )}
+            <div className="hidden md:block">
+              <ActionButtons
+                isCurrentUser={comment.user.username === currentUser.username}
+                isOpenModal={isOpenModal}
+                setIsOpenModal={setIsOpenModal}
+                onDelete={() => onDeleteComment(comment.id)}
+                onEdit={() => setIsEditing(true)}
+                onReply={() => setIsReplying(true)}
+              />
             </div>
           </div>
           {isEditing ? (
@@ -164,6 +110,25 @@ export function CommentCard({
               {comment.content}
             </p>
           )}
+          <div className="inline-flex gap-4 items-center justify-between w-full md:hidden mt-4 ">
+            <div className="text-moderateBlue font-bold">
+              <VoteButtons
+                userVote={userVote}
+                score={score}
+                onVote={handleVote}
+              />
+            </div>
+            <div className="text-grayishBlue">
+              <ActionButtons
+                isCurrentUser={comment.user.username === currentUser.username}
+                isOpenModal={isOpenModal}
+                setIsOpenModal={setIsOpenModal}
+                onDelete={() => onDeleteComment(comment.id)}
+                onEdit={() => setIsEditing(true)}
+                onReply={() => setIsReplying(true)}
+              />
+            </div>
+          </div>
         </div>
       </div>
       {isReplying ? <ReplayForm onSubmit={handleReply} /> : null}
