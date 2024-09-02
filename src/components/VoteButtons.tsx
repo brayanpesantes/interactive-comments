@@ -14,7 +14,7 @@ export const VoteButtons: React.FC<{
     >
       <FaPlus className="text-lightGrayishBlue group-hover:text-moderateBlue" />
     </button>
-    <span className="text-moderateBlue font-bold">{score}</span>
+    <p className="text-moderateBlue font-bold">{score}</p>
     <button
       className={userVote === null ? "cursor-not-allowed" : "cursor-pointer"}
       onClick={() => onVote(-1)}

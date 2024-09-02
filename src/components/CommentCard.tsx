@@ -63,9 +63,9 @@ export function CommentCard({
                 username={comment.user.username}
               />
 
-              <span className="text-darkBlue font-bold">
+              <h1 className="text-darkBlue font-bold">
                 {comment.user.username}
-              </span>
+              </h1>
               {comment.user.username === currentUser.username && (
                 <span className="text-white bg-moderateBlue px-2 py-1 rounded-sm text-sm font-medium">
                   you
