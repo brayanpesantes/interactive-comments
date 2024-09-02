@@ -96,7 +96,7 @@ export default function App() {
   };
 
   return (
-    <div className="w-full min-h-screen bg-veryLightGray px-4 lg:px-0">
+    <main className="w-full min-h-screen bg-veryLightGray px-4 lg:px-0">
       <div className="max-w-screen-md mx-auto py-4 lg:py-8 space-y-4">
         {comments.map((comment) => (
           <CommentCard
@@ -153,6 +153,6 @@ export default function App() {
         </a>
         .
       </div>
-    </div>
+    </main>
   );
 }

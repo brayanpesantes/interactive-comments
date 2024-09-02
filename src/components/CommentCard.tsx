@@ -55,7 +55,7 @@ export function CommentCard({
         <div className="md:block hidden">
           <VoteButtons userVote={userVote} score={score} onVote={handleVote} />
         </div>
-        <div className="w-full">
+        <article className="w-full">
           <div className="flex gap-4 items-center justify-between">
             <div className="inline-flex gap-4 items-center">
               <Avatar
@@ -63,9 +63,7 @@ export function CommentCard({
                 username={comment.user.username}
               />
 
-              <h1 className="text-darkBlue font-bold">
-                {comment.user.username}
-              </h1>
+              <p className="text-darkBlue font-bold">{comment.user.username}</p>
               {comment.user.username === currentUser.username && (
                 <span className="text-white bg-moderateBlue px-2 py-1 rounded-sm text-sm font-medium">
                   you
@@ -129,7 +127,7 @@ export function CommentCard({
               />
             </div>
           </div>
-        </div>
+        </article>
       </div>
       {isReplying ? <ReplayForm onSubmit={handleReply} /> : null}
       {children}
