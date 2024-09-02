@@ -134,6 +134,17 @@ export default function App() {
           onAddComment={handleAddComment}
         />
       </div>
+      <div className="attribution pb-2">
+        Challenge by{" "}
+        <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">
+          Frontend Mentor
+        </a>
+        . Coded by{" "}
+        <a href="https://github.com/brayanpesantes" target="_blank">
+          Alexis Nuñez
+        </a>
+        .
+      </div>
     </div>
   );
 }
